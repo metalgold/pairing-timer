@@ -3,6 +3,7 @@ package de.itoast.ppptimer;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Arc2D;
+import java.awt.geom.Ellipse2D;
 
 public class TimerPanel extends JPanel {
     private AngleTimer timer;
@@ -48,6 +49,9 @@ public class TimerPanel extends JPanel {
 
 
         int xOrigin = (bounds.width - usedValue) / 2;
+        BasicStroke s = new BasicStroke(5, 0, 0);
+        g2.setStroke(s);
+        g2.draw(new Ellipse2D.Double(xOrigin, distance, usedValue, usedValue));
         g2.fill(new Arc2D.Double(xOrigin, distance, usedValue, usedValue, 90, -timer.getAngle(), Arc2D.PIE));
     }
 
