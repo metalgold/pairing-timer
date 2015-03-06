@@ -6,7 +6,7 @@ Currently I use "Minutes" for pairing and "Healthier" for pausing.
 However I saw the two timers diverge, so I wanted the functionality in one app.
 
 
-Early Alpha Versaion ;)
+Warning: Early Alpha Version ;)
 
 # How to start the app:
 
