@@ -15,6 +15,7 @@ public class TimerFrame extends JFrame {
         frame.pack();
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
+        frame.setAlwaysOnTop(true);
         frame.add(timerPanel);
     }
 

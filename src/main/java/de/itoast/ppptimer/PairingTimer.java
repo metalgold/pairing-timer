@@ -18,13 +18,19 @@ public class PairingTimer extends java.util.Timer {
             @Override
             public void run() {
                 secondsLeft--;
-                angle += 360 / seconds;
+                angle += 360.0 / seconds;
                 panel.repaint(panel.getBounds());
                 if (secondsLeft == 0) {
-                    this.cancel();
+                    startOver(seconds);
                 }
             }
         };
+    }
+
+    private void startOver(int seconds) {
+        secondsLeft = seconds;
+        angle = 0;
+        Toolkit.getDefaultToolkit().beep();
     }
 
     public int getSecondsLeft() {
