@@ -6,13 +6,18 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class PauseTimer extends Timer implements AngleTimer {
+    private final TimerConfiguration timerConfiguration;
+    private TimerPanel panel;
     private int secondsLeft;
     private int duration;
     private double angle;
+    private boolean cancelled;
 
     public PauseTimer(final TimerConfiguration timerConfiguration, final TimerPanel panel) {
-        this.secondsLeft = timerConfiguration.getPauseDuration();
-        this.duration = timerConfiguration.getPauseDuration();
+        this.timerConfiguration = timerConfiguration;
+        this.panel = panel;
+        this.secondsLeft = this.timerConfiguration.getPauseDuration();
+        this.duration = this.timerConfiguration.getPauseDuration();
 
         this.schedule(new TimerTask() {
             @Override
@@ -50,5 +55,25 @@ public class PauseTimer extends Timer implements AngleTimer {
         } else {
             g2.setColor(Color.green);
         }
+    }
+
+    @Override
+    public void cancel() {
+        super.cancel();
+        cancelled = true;
+    }
+
+    public boolean isCancelled() {
+        return cancelled;
+    }
+
+    @Override
+    public AngleTimer cloneAndRun() {
+            PauseTimer pauseTimer = new PauseTimer(timerConfiguration, panel);
+            pauseTimer.secondsLeft = this.secondsLeft;
+            pauseTimer.angle = this.angle;
+            pauseTimer.cancelled = false;
+            return pauseTimer;
+
     }
 }

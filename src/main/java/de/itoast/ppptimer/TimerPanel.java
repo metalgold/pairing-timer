@@ -94,4 +94,16 @@ public class TimerPanel extends JPanel {
     public void setTimer(AngleTimer timer) {
         this.timer = timer;
     }
+
+    public void toggle() {
+        if (this.timer.isCancelled()) {
+            this.timer = timer.cloneAndRun();
+        } else {
+            this.timer.cancel();
+        }
+    }
+
+    public String getToggleText() {
+        return this.timer.isCancelled() ? "Start timer" : "Stop timer";
+    }
 }

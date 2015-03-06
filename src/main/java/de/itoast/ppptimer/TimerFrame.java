@@ -2,17 +2,22 @@ package de.itoast.ppptimer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class TimerFrame extends JFrame {
-    public TimerFrame(TimerPanel timerPanel) throws HeadlessException {
+    private final TimerPanel timerPanel;
+
+    public TimerFrame(final TimerPanel timerPanel) throws HeadlessException {
         JFrame frame = new JFrame("3P Timer - Pairing, Productivity, Pauses");
         frame.setMinimumSize(new Dimension(200, 200));
         frame.getSize().setSize(400, 400);
         frame.setResizable(true);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
-        timerPanel.setSize(400,400);
-        frame.add(timerPanel, BorderLayout.CENTER);
+        this.timerPanel = timerPanel;
+        this.timerPanel.setSize(400, 400);
+        frame.add(this.timerPanel, BorderLayout.CENTER);
 
         addMenuBarTo(frame);
 
@@ -30,7 +35,21 @@ public class TimerFrame extends JFrame {
 
     private void addSettingsMenuTo(JMenuBar menuBar) {
         JMenu settings = new JMenu("Settings");
-        addMenuItem(settings, "Start timer");
+
+        final JMenuItem menuItem;
+        menuItem = new JMenuItem("Start timer");
+        ActionListener action = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                timerPanel.toggle();
+                menuItem.setText(timerPanel.getToggleText());
+            }
+        };
+
+        menuItem.addActionListener(action);
+        menuItem.setEnabled(true);
+        settings.add(menuItem);
+
 
         addPairingDurationSection(settings);
         addPauseDurationSection(settings);
@@ -70,11 +89,11 @@ public class TimerFrame extends JFrame {
         addMenuItem(settings, "25 minutes");
     }
 
-    private void addMenuItem(JMenu settings, String text, Action action) {
+    private void addMenuItem(JMenu settings, String text, ActionListener action) {
         JMenuItem menuItem;
         menuItem = new JMenuItem(text);
-        menuItem.setAction(action);
-        menuItem.setEnabled(false);
+        menuItem.addActionListener(action);
+        menuItem.setEnabled(true);
         settings.add(menuItem);
     }
 

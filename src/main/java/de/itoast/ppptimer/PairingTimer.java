@@ -10,6 +10,7 @@ public class PairingTimer extends java.util.Timer implements AngleTimer {
     private int count;
     private TimerConfiguration timerConfiguration;
     private TimerPanel panel;
+    private boolean cancelled;
 
     public PairingTimer(TimerConfiguration timerConfiguration, TimerPanel panel) {
         this(timerConfiguration.getPairingDuration(), panel);
@@ -66,5 +67,25 @@ public class PairingTimer extends java.util.Timer implements AngleTimer {
         } else {
             g2.setColor(Color.gray);
         }
+    }
+
+    @Override
+    public void cancel() {
+        super.cancel();
+        cancelled = true;
+    }
+
+    public boolean isCancelled() {
+        return cancelled;
+    }
+
+    @Override
+    public AngleTimer cloneAndRun() {
+        PairingTimer pairingTimer = new PairingTimer(timerConfiguration, panel);
+        pairingTimer.secondsLeft = this.secondsLeft;
+        pairingTimer.angle = this.angle;
+        pairingTimer.count = this.count;
+        pairingTimer.cancelled = false;
+        return pairingTimer;
     }
 }
