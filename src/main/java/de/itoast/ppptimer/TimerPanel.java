@@ -1,41 +1,44 @@
 package de.itoast.ppptimer;
 
 import javax.swing.*;
-import javax.swing.Timer;
 import java.awt.*;
-import java.util.*;
 
 public class TimerPanel extends JPanel {
-    private double angle;
-    private int secondsLeft;
+    private final PairingTimer pairingTimer;
 
     public TimerPanel(final int seconds) {
-        this.angle = 0;
-        secondsLeft = seconds;
-        final JPanel self = this;
-        java.util.Timer timer = new java.util.Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                secondsLeft--;
-                angle += 360 / seconds;
-                self.repaint(self.getBounds());
-                if (secondsLeft == 0) {
-                    this.cancel();
-                }
-            }
-        }, 1000, 1000);
-
+        pairingTimer = new PairingTimer(seconds, this);
     }
 
     @Override
     protected void paintComponent(Graphics graphics) {
-        graphics.setColor(Color.darkGray);
-        Rectangle bounds = this.getBounds();
-        graphics.fillRect(bounds.x, bounds.y, bounds.width, bounds.height);
+        drawTheBackground(graphics);
+        drawPie(graphics);
+        drawTheRemainingTime(graphics);
+    }
 
-        if (secondsLeft <= 10) {
-            if (secondsLeft % 2 == 0) {
+    private void drawTheBackground(Graphics graphics) {
+        Rectangle bounds = this.getBounds();
+        graphics.setColor(Color.darkGray);
+        graphics.fillRect(bounds.x, bounds.y, bounds.width, bounds.height);
+    }
+
+    private void drawPie(Graphics graphics) {
+        determineColorAccordingToRemainingTime(graphics);
+        doDrawPie(graphics);
+    }
+
+    private void doDrawPie(Graphics graphics) {
+        Rectangle bounds = this.getBounds();
+        int width = bounds.width;
+        int height = bounds.height;
+        int usedValue = Math.min(width, height);
+        graphics.fillArc(bounds.x, bounds.y, usedValue, usedValue, 90, -(int) pairingTimer.getAngle());
+    }
+
+    private void determineColorAccordingToRemainingTime(Graphics graphics) {
+        if (pairingTimer.getSecondsLeft() <= 10) {
+            if (pairingTimer.getSecondsLeft() % 2 == 0) {
                 graphics.setColor(Color.red);
             } else {
                 graphics.setColor(Color.gray);
@@ -43,14 +46,12 @@ public class TimerPanel extends JPanel {
         } else {
             graphics.setColor(Color.gray);
         }
-        int width = bounds.width;
-        int height = bounds.height;
-        int usedValue = Math.min(width, height);
-        graphics.fillArc(bounds.x, bounds.y, usedValue, usedValue, 90, -(int) angle);
+    }
 
-
+    private void drawTheRemainingTime(Graphics graphics) {
+        Rectangle bounds = this.getBounds();
         graphics.setFont(new Font("Verdana", Font.PLAIN, 24));
         graphics.setColor(Color.white);
-        graphics.drawString(""+secondsLeft+"s", bounds.width/2-10, bounds.height/2-10);
+        graphics.drawString(""+ pairingTimer.getSecondsLeft()+"s", bounds.width/2-10, bounds.height/2-10);
     }
 }
