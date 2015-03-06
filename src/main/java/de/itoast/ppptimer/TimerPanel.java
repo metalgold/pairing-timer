@@ -3,6 +3,7 @@ package de.itoast.ppptimer;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Arc2D;
+import java.util.concurrent.TimeUnit;
 
 public class TimerPanel extends JPanel {
     private final PairingTimer pairingTimer;
@@ -60,6 +61,29 @@ public class TimerPanel extends JPanel {
         Rectangle bounds = this.getBounds();
         g2.setFont(new Font("Verdana", Font.PLAIN, 24));
         g2.setColor(Color.white);
-        g2.drawString("" + pairingTimer.getSecondsLeft() + "s", bounds.width / 2 - 10, bounds.height / 2 - 10);
+        g2.drawString(getRemainingTime(), bounds.width / 2 - 10, bounds.height / 2 - 10);
+    }
+
+    private String getRemainingTime() {
+        int millisLeft = pairingTimer.getSecondsLeft() * 1000;
+        int h = (int) ((millisLeft / 1000) / 3600);
+        int m = (int) (((millisLeft / 1000) / 60) % 60);
+        int s = (int) ((millisLeft / 1000) % 60);
+
+        StringBuilder sb = new StringBuilder();
+
+        if (h > 0) {
+            sb.append(h + "h");
+        }
+
+        if (m > 0) {
+            sb.append(m + "m");
+        }
+
+        if (s > 0) {
+            sb.append(s + "s");
+        }
+
+        return sb.toString();
     }
 }
