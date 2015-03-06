@@ -14,9 +14,7 @@ public class TimerFrame extends JFrame {
         frame.setLayout(new BorderLayout());
         frame.add(timerPanel);
 
-        JMenuBar menuBar = new JMenuBar();
-        addSettingsMenuTo(menuBar);
-        frame.setJMenuBar(menuBar);
+        addMenuBarTo(frame);
 
         frame.pack();
         frame.setVisible(true);
@@ -24,9 +22,16 @@ public class TimerFrame extends JFrame {
         frame.setAlwaysOnTop(true);
     }
 
+    private void addMenuBarTo(JFrame frame) {
+        JMenuBar menuBar = new JMenuBar();
+        addSettingsMenuTo(menuBar);
+        frame.setJMenuBar(menuBar);
+    }
+
     private void addSettingsMenuTo(JMenuBar menuBar) {
         JMenu settings = new JMenu("Settings");
         addMenuItem(settings, "Start timer");
+
         addPairingDurationSection(settings);
         addPauseDurationSection(settings);
         addPauseSection(settings);
@@ -63,6 +68,14 @@ public class TimerFrame extends JFrame {
         addMenuItem(settings, "15 minutes");
         addMenuItem(settings, "20 minutes");
         addMenuItem(settings, "25 minutes");
+    }
+
+    private void addMenuItem(JMenu settings, String text, Action action) {
+        JMenuItem menuItem;
+        menuItem = new JMenuItem(text);
+        menuItem.setAction(action);
+        menuItem.setEnabled(false);
+        settings.add(menuItem);
     }
 
     private void addMenuItem(JMenu settings, String text) {
