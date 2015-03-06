@@ -42,11 +42,11 @@ public class TimerFrame extends JFrame {
         settings.add(new JSeparator());
         settings.add(new JLabel("Pause after..."));
         addMenuItem(settings, "1 pairing session");
-        addMenuItem(settings, "2 pairing session");
-        addMenuItem(settings, "3 pairing session");
-        addMenuItem(settings, "4 pairing session");
-        addMenuItem(settings, "5 pairing session");
-        addMenuItem(settings, "6 pairing session");
+        addMenuItem(settings, "2 pairing sessions");
+        addMenuItem(settings, "3 pairing sessions");
+        addMenuItem(settings, "4 pairing sessions");
+        addMenuItem(settings, "5 pairing sessions");
+        addMenuItem(settings, "6 pairing sessions");
     }
 
     private void addPauseDurationSection(JMenu settings) {
