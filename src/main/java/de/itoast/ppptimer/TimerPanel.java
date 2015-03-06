@@ -50,12 +50,10 @@ public class TimerPanel extends JPanel {
             height = width = bounds.height - 10;
             x = (int)((bounds.width - width) / 2.0) + 5;
             y = 5;
-            System.out.println("tall");
         } else /* tall */ {
             width = height = bounds.width-10;
             x = 5;
             y = (int) ((bounds.height - height) / 2.0) +5 ;
-            System.out.println("wide");
         }
 
         BasicStroke s = new BasicStroke(5, 0, 0);
