@@ -10,6 +10,8 @@ public class TimerPanel extends JPanel {
 
     public TimerPanel(final TimerConfiguration timerConfiguration) {
         timer = new PairingTimer(timerConfiguration, this);
+        this.setLayout(new BorderLayout());
+        this.setDoubleBuffered(true);
     }
 
     @Override
@@ -41,18 +43,25 @@ public class TimerPanel extends JPanel {
 
     private void doDrawPie(Graphics2D g2) {
         Rectangle bounds = this.getBounds();
-        int minValue = Math.min(bounds.width, bounds.height);
-        int maxValue = Math.max(bounds.width, bounds.height);
-        int distance = (maxValue - minValue) / 2;
-        int usedValue = Math.min(bounds.width, bounds.height) - distance * 2;
-        System.out.println(bounds);
 
+        int x,y,width,height;
 
-        int xOrigin = (bounds.width - usedValue) / 2;
+        if (/* wide or same */ bounds.width > bounds.height) {
+            height = width = bounds.height - 10;
+            x = (int)((bounds.width - width) / 2.0) + 5;
+            y = 5;
+            System.out.println("tall");
+        } else /* tall */ {
+            width = height = bounds.width-10;
+            x = 5;
+            y = (int) ((bounds.height - height) / 2.0) +5 ;
+            System.out.println("wide");
+        }
+
         BasicStroke s = new BasicStroke(5, 0, 0);
         g2.setStroke(s);
-        g2.draw(new Ellipse2D.Double(xOrigin, distance, usedValue, usedValue));
-        g2.fill(new Arc2D.Double(xOrigin, distance, usedValue, usedValue, 90, -timer.getAngle(), Arc2D.PIE));
+        g2.draw(new Ellipse2D.Double(x, y, width, height));
+        g2.fill(new Arc2D.Double(x, y, width, height, 90, -timer.getAngle(), Arc2D.PIE));
     }
 
     private void drawTheRemainingTime(Graphics2D g2) {

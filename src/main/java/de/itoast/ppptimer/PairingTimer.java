@@ -39,7 +39,7 @@ public class PairingTimer extends java.util.Timer implements AngleTimer {
     private void startOver(int seconds) {
         count++;
         secondsLeft = seconds;
-        angle = 0;
+        angle = 360;
         Toolkit.getDefaultToolkit().beep();
         if (count==timerConfiguration.getPairingSessionsBeforePause()) {
             PauseTimer pauseTimer = new PauseTimer(timerConfiguration, panel);
