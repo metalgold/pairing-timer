@@ -5,7 +5,7 @@ package de.itoast.ppptimer;
  */
 public class App {
     public static void main(String[] args) throws InterruptedException {
-        new TimerFrame(new TimerPanel(Integer.parseInt(args[0])));
+        new TimerFrame(new TimerPanel(new TimerConfiguration(args)));
     }
 
 }

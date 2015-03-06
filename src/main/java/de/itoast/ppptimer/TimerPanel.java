@@ -3,13 +3,12 @@ package de.itoast.ppptimer;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Arc2D;
-import java.util.concurrent.TimeUnit;
 
 public class TimerPanel extends JPanel {
-    private final PairingTimer pairingTimer;
+    private AngleTimer timer;
 
-    public TimerPanel(final int seconds) {
-        pairingTimer = new PairingTimer(seconds, this);
+    public TimerPanel(final TimerConfiguration timerConfiguration) {
+        timer = new PairingTimer(timerConfiguration, this);
     }
 
     @Override
@@ -35,26 +34,14 @@ public class TimerPanel extends JPanel {
     }
 
     private void drawPie(Graphics2D g2) {
-        determineColorAccordingToRemainingTime(g2);
+        timer.determineColorAccordingToRemainingTime(g2);
         doDrawPie(g2);
     }
 
     private void doDrawPie(Graphics2D g2) {
         Rectangle bounds = this.getBounds();
         int usedValue = Math.min(bounds.width, bounds.height);
-        g2.fill(new Arc2D.Double(bounds.x, bounds.y, usedValue, usedValue, 90, -pairingTimer.getAngle(), Arc2D.PIE));
-    }
-
-    private void determineColorAccordingToRemainingTime(Graphics2D g2) {
-        if (pairingTimer.getSecondsLeft() <= 10) {
-            if (pairingTimer.getSecondsLeft() % 2 == 0) {
-                g2.setColor(Color.red);
-            } else {
-                g2.setColor(Color.gray);
-            }
-        } else {
-            g2.setColor(Color.gray);
-        }
+        g2.fill(new Arc2D.Double(bounds.x, bounds.y, usedValue, usedValue, 90, -timer.getAngle(), Arc2D.PIE));
     }
 
     private void drawTheRemainingTime(Graphics2D g2) {
@@ -65,10 +52,10 @@ public class TimerPanel extends JPanel {
     }
 
     private String getRemainingTime() {
-        int millisLeft = pairingTimer.getSecondsLeft() * 1000;
-        int h = (int) ((millisLeft / 1000) / 3600);
-        int m = (int) (((millisLeft / 1000) / 60) % 60);
-        int s = (int) ((millisLeft / 1000) % 60);
+        int millisLeft = timer.getSecondsLeft() * 1000;
+        int h = (millisLeft / 1000) / 3600;
+        int m = ((millisLeft / 1000) / 60) % 60;
+        int s = (millisLeft / 1000) % 60;
 
         StringBuilder sb = new StringBuilder();
 
@@ -85,5 +72,9 @@ public class TimerPanel extends JPanel {
         }
 
         return sb.toString();
+    }
+
+    public void setTimer(AngleTimer timer) {
+        this.timer = timer;
     }
 }
