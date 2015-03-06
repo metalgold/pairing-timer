@@ -40,15 +40,21 @@ public class TimerPanel extends JPanel {
 
     private void doDrawPie(Graphics2D g2) {
         Rectangle bounds = this.getBounds();
-        int usedValue = Math.min(bounds.width, bounds.height);
-        g2.fill(new Arc2D.Double(bounds.x, bounds.y, usedValue, usedValue, 90, -timer.getAngle(), Arc2D.PIE));
+        int minValue = Math.min(bounds.width, bounds.height);
+        int maxValue = Math.max(bounds.width, bounds.height);
+        int distance = (maxValue - minValue) / 2;
+        int usedValue = Math.min(bounds.width, bounds.height) - distance * 2;
+        System.out.println(bounds);
+
+
+        int xOrigin = (bounds.width - usedValue) / 2;
+        g2.fill(new Arc2D.Double(xOrigin, distance, usedValue, usedValue, 90, -timer.getAngle(), Arc2D.PIE));
     }
 
     private void drawTheRemainingTime(Graphics2D g2) {
-        Rectangle bounds = this.getBounds();
         g2.setFont(new Font("Verdana", Font.PLAIN, 24));
         g2.setColor(Color.white);
-        g2.drawString(getRemainingTime(), bounds.width / 2 - 10, bounds.height / 2 - 10);
+        g2.drawString(getRemainingTime(), 0, 24);
     }
 
     private String getRemainingTime() {
