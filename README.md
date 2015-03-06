@@ -1,9 +1,14 @@
 # 3ptimer
 Productivity, Pairing, Pause Timer
 
+# Why another app?
+Currently I use "Minutes" for pairing and "Healthier" for pausing.
+However I saw the two timers diverge, so I wanted the functionality in one app.
+
+
 Early Alpha Versaion ;)
 
-How to start the app:
+# How to start the app:
 
 ```
 java -jar ppptimer-1.0-SNAPSHOT.jar 600 300 4
