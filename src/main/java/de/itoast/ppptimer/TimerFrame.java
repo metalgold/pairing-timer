@@ -12,11 +12,11 @@ public class TimerFrame extends JFrame {
         frame.setResizable(false);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
+        frame.add(timerPanel);
         frame.pack();
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
         frame.setAlwaysOnTop(true);
-        frame.add(timerPanel);
     }
 
 }
