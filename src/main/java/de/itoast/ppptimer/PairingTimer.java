@@ -6,6 +6,7 @@ import java.util.TimerTask;
 
 public class PairingTimer extends java.util.Timer implements AngleTimer {
     private int secondsLeft;
+    private int seconds;
     private double angle;
     private int count;
     private TimerConfiguration timerConfiguration;
@@ -13,13 +14,14 @@ public class PairingTimer extends java.util.Timer implements AngleTimer {
     private boolean cancelled;
 
     public PairingTimer(TimerConfiguration timerConfiguration, TimerPanel panel) {
-        this(timerConfiguration.getPairingDuration(), panel);
+        this.secondsLeft = timerConfiguration.getPairingDuration();
+        this.seconds = timerConfiguration.getPairingDuration();
         this.timerConfiguration = timerConfiguration;
         this.panel = panel;
+        this.cancelled = true;
     }
 
-    private PairingTimer(final int seconds, final TimerPanel panel) {
-        this.secondsLeft = seconds;
+    public void start() {
         this.schedule(makeTimerTask(seconds, panel), 1000, 1000);
     }
 
@@ -41,12 +43,18 @@ public class PairingTimer extends java.util.Timer implements AngleTimer {
         count++;
         secondsLeft = seconds;
         angle = 360;
+        panel.repaint(panel.getBounds());
         Toolkit.getDefaultToolkit().beep();
         if (count==timerConfiguration.getPairingSessionsBeforePause()) {
-            PauseTimer pauseTimer = new PauseTimer(timerConfiguration, panel);
-            panel.setTimer(pauseTimer);
-            this.cancel();
+            startPauseTimer();
         }
+    }
+
+    private void startPauseTimer() {
+        PauseTimer pauseTimer = new PauseTimer(timerConfiguration, panel);
+        panel.setTimer(pauseTimer);
+        pauseTimer.start();
+        this.cancel();
     }
 
     public int getSecondsLeft() {
@@ -80,12 +88,13 @@ public class PairingTimer extends java.util.Timer implements AngleTimer {
     }
 
     @Override
-    public AngleTimer cloneAndRun() {
+    public AngleTimer resume() {
         PairingTimer pairingTimer = new PairingTimer(timerConfiguration, panel);
         pairingTimer.secondsLeft = this.secondsLeft;
         pairingTimer.angle = this.angle;
         pairingTimer.count = this.count;
-        pairingTimer.cancelled = false;
+        pairingTimer.cancelled = true;
+        pairingTimer.start();
         return pairingTimer;
     }
 }

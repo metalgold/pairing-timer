@@ -9,9 +9,11 @@ public interface AngleTimer {
 
     void determineColorAccordingToRemainingTime(Graphics2D graphics2D);
 
+    void start();
+
     void cancel();
 
     boolean isCancelled();
 
-    AngleTimer cloneAndRun();
+    AngleTimer resume();
 }

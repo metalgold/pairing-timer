@@ -1,6 +1,5 @@
 package de.itoast.ppptimer;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -18,21 +17,35 @@ public class PauseTimer extends Timer implements AngleTimer {
         this.panel = panel;
         this.secondsLeft = this.timerConfiguration.getPauseDuration();
         this.duration = this.timerConfiguration.getPauseDuration();
+        this.cancelled = true;
+    }
 
-        this.schedule(new TimerTask() {
+    private TimerTask makeTimerTask(final TimerPanel panel) {
+        return new TimerTask() {
             @Override
             public void run() {
                 secondsLeft--;
                 angle += 360.0 / duration;
                 panel.repaint(panel.getBounds());
-                if (secondsLeft==0) {
-                    Toolkit.getDefaultToolkit().beep();
-                    PairingTimer timer = new PairingTimer(timerConfiguration, panel);
-                    panel.setTimer(timer);
-                    this.cancel();
+                if (secondsLeft == 0) {
+                    startPairing();
                 }
             }
-        }, 1000, 1000);
+        };
+    }
+
+    private void startPairing() {
+        angle = 360;
+        panel.repaint(panel.getBounds());
+        Toolkit.getDefaultToolkit().beep();
+        PairingTimer timer = new PairingTimer(timerConfiguration, panel);
+        panel.setTimer(timer);
+        timer.start();
+        this.cancel();
+    }
+
+    public void start() {
+        this.schedule(makeTimerTask(panel), 1000, 1000);
     }
 
     @Override
@@ -68,12 +81,13 @@ public class PauseTimer extends Timer implements AngleTimer {
     }
 
     @Override
-    public AngleTimer cloneAndRun() {
-            PauseTimer pauseTimer = new PauseTimer(timerConfiguration, panel);
-            pauseTimer.secondsLeft = this.secondsLeft;
-            pauseTimer.angle = this.angle;
-            pauseTimer.cancelled = false;
-            return pauseTimer;
+    public AngleTimer resume() {
+        PauseTimer pauseTimer = new PauseTimer(timerConfiguration, panel);
+        pauseTimer.secondsLeft = this.secondsLeft;
+        pauseTimer.angle = this.angle;
+        pauseTimer.cancelled = true;
+        pauseTimer.start();
+        return pauseTimer;
 
     }
 }

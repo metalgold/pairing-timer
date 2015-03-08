@@ -97,7 +97,7 @@ public class TimerPanel extends JPanel {
 
     public void toggle() {
         if (this.timer.isCancelled()) {
-            this.timer = timer.cloneAndRun();
+            this.timer = timer.resume();
         } else {
             this.timer.cancel();
         }
