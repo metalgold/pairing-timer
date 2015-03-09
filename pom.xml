@@ -53,6 +53,7 @@
                         <version>1.0-alpha-1</version>
                         <configuration>
                             <mainClass>de.itoast.ppptimer.App</mainClass>
+                            <jvmVersion>1.7+</jvmVersion>
                         </configuration>
                         <executions>
                             <execution>
