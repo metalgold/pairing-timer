@@ -7,8 +7,10 @@ import java.awt.geom.Ellipse2D;
 
 public class TimerPanel extends JPanel {
     private AngleTimer timer;
+    private TimerConfiguration timerConfiguration;
 
     public TimerPanel(final TimerConfiguration timerConfiguration) {
+        this.timerConfiguration = timerConfiguration;
         timer = new PairingTimer(timerConfiguration, this);
         this.setLayout(new BorderLayout());
         this.setDoubleBuffered(true);
@@ -105,5 +107,15 @@ public class TimerPanel extends JPanel {
 
     public String getToggleText() {
         return this.timer.isCancelled() ? "Start timer" : "Stop timer";
+    }
+
+    public void restart() {
+        if (this.timer.isCancelled()) {
+            this.timer = new PairingTimer(timerConfiguration, this);
+        } else {
+            this.timer.cancel();
+            this.timer = new PairingTimer(timerConfiguration, this);
+            this.timer.start();
+        }
     }
 }

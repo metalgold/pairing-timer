@@ -10,11 +10,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class TimerFrame extends JFrame {
+public class TimerFrame extends JFrame implements ConfiguationChangeListener {
     private final TimerPanel timerPanel;
     private TimerConfiguration timerConfiguration;
 
     public TimerFrame(final TimerPanel timerPanel, TimerConfiguration timerConfiguration) throws HeadlessException {
+        timerConfiguration.setConfiguationChangeListener(this);
         this.timerConfiguration = timerConfiguration;
         JFrame frame = new JFrame("3P Timer - Pairing, Productivity, Pauses");
         frame.setMinimumSize(new Dimension(200, 200));
@@ -126,4 +127,8 @@ public class TimerFrame extends JFrame {
         }
     }
 
+    @Override
+    public void notifyAboutConfigurationChange() {
+        timerPanel.restart();
+    }
 }

@@ -6,6 +6,7 @@ public class TimerConfiguration {
     private int pairingSessionsBeforePause;
     private Integer maxPairingSessions;
     private int pairingSessionCount;
+    private ConfiguationChangeListener configuationChangeListener;
 
     public TimerConfiguration() {
         pairingDuration = 600;
@@ -34,18 +35,23 @@ public class TimerConfiguration {
 
     public void setMaxPairingSessions(Integer maxPairingSessions) {
         this.maxPairingSessions = maxPairingSessions;
+        configuationChangeListener.notifyAboutConfigurationChange();
     }
 
     public void setPairingSessionsBeforePause(int pairingSessionsBeforePause) {
         this.pairingSessionsBeforePause = pairingSessionsBeforePause;
+        configuationChangeListener.notifyAboutConfigurationChange();
+
     }
 
     public void setPauseDuration(int pauseDuration) {
         this.pauseDuration = pauseDuration;
+        configuationChangeListener.notifyAboutConfigurationChange();
     }
 
     public void setPairingDuration(int pairingDuration) {
         this.pairingDuration = pairingDuration;
+        configuationChangeListener.notifyAboutConfigurationChange();
     }
 
     public boolean hasLimitedPairingSessions() {
@@ -64,5 +70,9 @@ public class TimerConfiguration {
 
     public void incrementPairingSessionCount() {
         pairingSessionCount++;
+    }
+
+    public void setConfiguationChangeListener(ConfiguationChangeListener configuationChangeListener) {
+        this.configuationChangeListener = configuationChangeListener;
     }
 }
