@@ -45,7 +45,10 @@ public class PairingTimer extends java.util.Timer implements AngleTimer {
         angle = 360;
         panel.repaint(panel.getBounds());
         Toolkit.getDefaultToolkit().beep();
-        if (count==timerConfiguration.getPairingSessionsBeforePause()) {
+        timerConfiguration.incrementPairingSessionCount();
+        if (timerConfiguration.hasLimitedPairingSessions() && timerConfiguration.hasPairingSessionLimitReached()) {
+            this.cancel();
+        } else if (count==timerConfiguration.getPairingSessionsBeforePause()) {
             startPauseTimer();
         }
     }
@@ -93,7 +96,7 @@ public class PairingTimer extends java.util.Timer implements AngleTimer {
         pairingTimer.secondsLeft = this.secondsLeft;
         pairingTimer.angle = this.angle;
         pairingTimer.count = this.count;
-        pairingTimer.cancelled = true;
+        pairingTimer.cancelled = false;
         pairingTimer.start();
         return pairingTimer;
     }

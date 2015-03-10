@@ -5,6 +5,7 @@ public class TimerConfiguration {
     private int pauseDuration;
     private int pairingSessionsBeforePause;
     private Integer maxPairingSessions;
+    private int pairingSessionCount;
 
     public TimerConfiguration() {
         pairingDuration = 600;
@@ -39,5 +40,13 @@ public class TimerConfiguration {
         if (maxPairingSessions==null)
             throw new RuntimeException("Pairings sessions are set unlimited.");
         return maxPairingSessions;
+    }
+
+    public boolean hasPairingSessionLimitReached() {
+        return pairingSessionCount == getMaxPairingSessions();
+    }
+
+    public void incrementPairingSessionCount() {
+        pairingSessionCount++;
     }
 }

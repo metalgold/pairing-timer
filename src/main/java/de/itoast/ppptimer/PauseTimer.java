@@ -85,7 +85,7 @@ public class PauseTimer extends Timer implements AngleTimer {
         PauseTimer pauseTimer = new PauseTimer(timerConfiguration, panel);
         pauseTimer.secondsLeft = this.secondsLeft;
         pauseTimer.angle = this.angle;
-        pauseTimer.cancelled = true;
+        pauseTimer.cancelled = false;
         pauseTimer.start();
         return pauseTimer;
 
