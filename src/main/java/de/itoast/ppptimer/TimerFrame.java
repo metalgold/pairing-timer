@@ -1,6 +1,7 @@
 package de.itoast.ppptimer;
 
 import de.itoast.ppptimer.menus.MaxPairingSessionsBeforePauseMenuItem;
+import de.itoast.ppptimer.menus.MaxPairingSessionsMenuItem;
 import de.itoast.ppptimer.menus.PairingDurationMenuItem;
 import de.itoast.ppptimer.menus.PauseDurationMenuItem;
 
@@ -60,7 +61,26 @@ public class TimerFrame extends JFrame {
         addPairingDurationSection(settings);
         addPauseDurationSection(settings);
         addPauseSection(settings);
+        addMaxPairingSessionsSection(settings);
         menuBar.add(settings);
+    }
+
+    private void addMaxPairingSessionsSection(JMenu settings) {
+        settings.add(new JSeparator());
+        settings.add(new JLabel("Max Pairing sessions..."));
+
+        ButtonGroup group = new ButtonGroup();
+
+        MaxPairingSessionsMenuItem item = new MaxPairingSessionsMenuItem(timerConfiguration);
+        group.add(item);
+        settings.add(item);
+
+        for (int i=1;i<=6;i++) {
+            item = new MaxPairingSessionsMenuItem(i, timerConfiguration);
+            group.add(item);
+            settings.add(item);
+        }
+
     }
 
     private void addPauseSection(JMenu settings) {
