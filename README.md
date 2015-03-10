@@ -7,10 +7,16 @@ However I saw the two timers diverge, so I wanted the functionality in one app.
 
 Warning: Early Alpha Version ;)
 
-# How to start the app:
+# How to start the app without params:
 
 ```
-java -jar ppptimer-1.0-SNAPSHOT.jar 600 300 4
+java -jar ppptimer-1.0-SNAPSHOT.jar
+```
+
+# How to start the app with params:
+
+```
+java -jar ppptimer-1.0-SNAPSHOT.jar 600 300 4 5
 ```
 
 1st arg: Pairing session duration in seconds (10 Minutes)
@@ -18,3 +24,5 @@ java -jar ppptimer-1.0-SNAPSHOT.jar 600 300 4
 2nd arg: Pause duration in seconds (5 Minutes)
 
 3rd arg: How many pairing sessions before pause? (after 40 minutes)
+
+4th arg: How many pairing sessions at all? (5)
