@@ -1,5 +1,9 @@
 package de.itoast.ppptimer;
 
+import de.itoast.ppptimer.menus.MaxPairingSessionsBeforePauseMenuItem;
+import de.itoast.ppptimer.menus.PairingDurationMenuItem;
+import de.itoast.ppptimer.menus.PauseDurationMenuItem;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,8 +11,10 @@ import java.awt.event.ActionListener;
 
 public class TimerFrame extends JFrame {
     private final TimerPanel timerPanel;
+    private TimerConfiguration timerConfiguration;
 
-    public TimerFrame(final TimerPanel timerPanel) throws HeadlessException {
+    public TimerFrame(final TimerPanel timerPanel, TimerConfiguration timerConfiguration) throws HeadlessException {
+        this.timerConfiguration = timerConfiguration;
         JFrame frame = new JFrame("3P Timer - Pairing, Productivity, Pauses");
         frame.setMinimumSize(new Dimension(200, 200));
         frame.getSize().setSize(400, 400);
@@ -60,48 +66,44 @@ public class TimerFrame extends JFrame {
     private void addPauseSection(JMenu settings) {
         settings.add(new JSeparator());
         settings.add(new JLabel("Pause after..."));
-        addMenuItem(settings, "1 pairing session");
-        addMenuItem(settings, "2 pairing sessions");
-        addMenuItem(settings, "3 pairing sessions");
-        addMenuItem(settings, "4 pairing sessions");
-        addMenuItem(settings, "5 pairing sessions");
-        addMenuItem(settings, "6 pairing sessions");
+
+        ButtonGroup group = new ButtonGroup();
+
+        for (int i=1;i<=6;i++) {
+            MaxPairingSessionsBeforePauseMenuItem item = new MaxPairingSessionsBeforePauseMenuItem(i, timerConfiguration);
+            group.add(item);
+            settings.add(item);
+        }
+
     }
 
     private void addPauseDurationSection(JMenu settings) {
         settings.add(new JSeparator());
         settings.add(new JLabel("Pause duration"));
-        addMenuItem(settings, "5 minutes");
-        addMenuItem(settings, "10 minutes");
-        addMenuItem(settings, "15 minutes");
-        addMenuItem(settings, "20 minutes");
-        addMenuItem(settings, "25 minutes");
+
+        ButtonGroup group = new ButtonGroup();
+
+        for (int i = 1; i <= 5; i++) {
+            PauseDurationMenuItem item = new PauseDurationMenuItem(i * 5, timerConfiguration);
+            settings.add(item);
+            group.add(item);
+        }
     }
 
     private void addPairingDurationSection(JMenu settings) {
         settings.add(new JSeparator());
         settings.add(new JLabel("Pairing duration"));
-        String text = "5 minutes";
-        addMenuItem(settings, text);
-        addMenuItem(settings, "10 minutes");
-        addMenuItem(settings, "15 minutes");
-        addMenuItem(settings, "20 minutes");
-        addMenuItem(settings, "25 minutes");
-    }
 
-    private void addMenuItem(JMenu settings, String text, ActionListener action) {
-        JMenuItem menuItem;
-        menuItem = new JMenuItem(text);
-        menuItem.addActionListener(action);
-        menuItem.setEnabled(true);
-        settings.add(menuItem);
-    }
+        int[] minutes = {10, 15, 20, 25};
 
-    private void addMenuItem(JMenu settings, String text) {
-        JMenuItem menuItem;
-        menuItem = new JMenuItem(text);
-        menuItem.setEnabled(false);
-        settings.add(menuItem);
+
+        ButtonGroup group = new ButtonGroup();
+
+        for (int minute : minutes) {
+            PairingDurationMenuItem menuItem = new PairingDurationMenuItem(minute, timerConfiguration);
+            settings.add(menuItem);
+            group.add(menuItem);
+        }
     }
 
 }

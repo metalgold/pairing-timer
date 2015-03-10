@@ -32,6 +32,22 @@ public class TimerConfiguration {
         return pairingSessionsBeforePause;
     }
 
+    public void setMaxPairingSessions(Integer maxPairingSessions) {
+        this.maxPairingSessions = maxPairingSessions;
+    }
+
+    public void setPairingSessionsBeforePause(int pairingSessionsBeforePause) {
+        this.pairingSessionsBeforePause = pairingSessionsBeforePause;
+    }
+
+    public void setPauseDuration(int pauseDuration) {
+        this.pauseDuration = pauseDuration;
+    }
+
+    public void setPairingDuration(int pairingDuration) {
+        this.pairingDuration = pairingDuration;
+    }
+
     public boolean hasLimitedPairingSessions() {
         return maxPairingSessions != null;
     }

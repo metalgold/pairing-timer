@@ -12,7 +12,7 @@ public class App {
         } else {
             timerConfiguration = new TimerConfiguration();
         }
-        new TimerFrame(new TimerPanel(timerConfiguration));
+        new TimerFrame(new TimerPanel(timerConfiguration), timerConfiguration);
     }
 
 }
