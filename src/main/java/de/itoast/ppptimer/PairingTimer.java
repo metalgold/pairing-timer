@@ -45,6 +45,7 @@ public class PairingTimer extends java.util.Timer implements AngleTimer {
         angle = 360;
         panel.repaint(panel.getBounds());
         Toolkit.getDefaultToolkit().beep();
+        angle = 0;
         timerConfiguration.incrementPairingSessionCount();
         if (timerConfiguration.hasLimitedPairingSessions() && timerConfiguration.hasPairingSessionLimitReached()) {
             this.cancel();
