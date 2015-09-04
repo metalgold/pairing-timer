@@ -1,9 +1,9 @@
-package de.itoast.ppptimer;
+package de.itoast.pairingtimer;
 
-import de.itoast.ppptimer.menus.MaxPairingSessionsBeforePauseMenuItem;
-import de.itoast.ppptimer.menus.MaxPairingSessionsMenuItem;
-import de.itoast.ppptimer.menus.PairingDurationMenuItem;
-import de.itoast.ppptimer.menus.PauseDurationMenuItem;
+import de.itoast.pairingtimer.menus.MaxPairingSessionsBeforePauseMenuItem;
+import de.itoast.pairingtimer.menus.MaxPairingSessionsMenuItem;
+import de.itoast.pairingtimer.menus.PairingDurationMenuItem;
+import de.itoast.pairingtimer.menus.PauseDurationMenuItem;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,8 +17,8 @@ public class TimerFrame extends JFrame implements ConfiguationChangeListener {
     public TimerFrame(final TimerPanel timerPanel, TimerConfiguration timerConfiguration) throws HeadlessException {
         timerConfiguration.setConfiguationChangeListener(this);
         this.timerConfiguration = timerConfiguration;
-        JFrame frame = new JFrame("3P Timer - Pairing, Productivity, Pauses");
-        frame.setMinimumSize(new Dimension(200, 200));
+        JFrame frame = new JFrame("Pairing Timer");
+        frame.setMinimumSize(new Dimension(400, 400));
         frame.getSize().setSize(400, 400);
         frame.setResizable(true);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

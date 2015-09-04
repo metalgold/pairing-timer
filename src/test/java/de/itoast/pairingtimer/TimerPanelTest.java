@@ -1,4 +1,4 @@
-package de.itoast.ppptimer;
+package de.itoast.pairingtimer;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -8,7 +8,6 @@ import java.awt.font.FontRenderContext;
 import java.awt.font.GlyphVector;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
-import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.BufferedImageOp;
 import java.awt.image.ImageObserver;

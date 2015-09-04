@@ -1,4 +1,4 @@
-package de.itoast.ppptimer;
+package de.itoast.pairingtimer;
 
 import java.awt.*;
 import java.util.Timer;

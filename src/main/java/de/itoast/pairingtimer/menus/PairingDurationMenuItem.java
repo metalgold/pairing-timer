@@ -1,6 +1,6 @@
-package de.itoast.ppptimer.menus;
+package de.itoast.pairingtimer.menus;
 
-import de.itoast.ppptimer.TimerConfiguration;
+import de.itoast.pairingtimer.TimerConfiguration;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
