@@ -21,6 +21,16 @@ public class TimerConfiguration {
         maxPairingSessions = Integer.parseInt(args[3]);
     }
 
+    static TimerConfiguration configure(String[] args) {
+        TimerConfiguration timerConfiguration;
+        if (args != null && args.length > 0 && args.length<=4) {
+            timerConfiguration = new TimerConfiguration(args);
+        } else {
+            timerConfiguration = new TimerConfiguration();
+        }
+        return timerConfiguration;
+    }
+
     public int getPairingDuration() {
         return pairingDuration;
     }
@@ -74,5 +84,18 @@ public class TimerConfiguration {
 
     public void setConfiguationChangeListener(ConfiguationChangeListener configuationChangeListener) {
         this.configuationChangeListener = configuationChangeListener;
+    }
+
+    public boolean isMaximumPairingSessionsBeforePauseReached(int number) {
+        return number == this.getPairingSessionsBeforePause();
+    }
+
+    public boolean isSelected(int number) {
+        if (number > 0) {
+            return this.hasLimitedPairingSessions()
+                    && this.getMaxPairingSessions() == number;
+        } else {
+            return !this.hasLimitedPairingSessions();
+        }
     }
 }
