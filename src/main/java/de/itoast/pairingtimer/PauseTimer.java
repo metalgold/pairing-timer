@@ -4,13 +4,14 @@ import java.awt.*;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class PauseTimer extends Timer implements AngleTimer {
+public class PauseTimer implements AngleTimer {
     private final TimerConfiguration timerConfiguration;
     private TimerPanel panel;
     private int secondsLeft;
     private int duration;
     private double angle;
     private boolean cancelled;
+    private Timer timer;
 
     public PauseTimer(final TimerConfiguration timerConfiguration, final TimerPanel panel) {
         this.timerConfiguration = timerConfiguration;
@@ -18,6 +19,7 @@ public class PauseTimer extends Timer implements AngleTimer {
         this.secondsLeft = this.timerConfiguration.getPauseDuration();
         this.duration = this.timerConfiguration.getPauseDuration();
         this.cancelled = true;
+        this.timer = new Timer();
     }
 
     private TimerTask makeTimerTask(final TimerPanel panel) {
@@ -45,7 +47,7 @@ public class PauseTimer extends Timer implements AngleTimer {
     }
 
     public void start() {
-        this.schedule(makeTimerTask(panel), 1000, 1000);
+        timer.schedule(makeTimerTask(panel), 1000, 1000);
     }
 
     @Override
@@ -72,7 +74,7 @@ public class PauseTimer extends Timer implements AngleTimer {
 
     @Override
     public void cancel() {
-        super.cancel();
+        timer.cancel();
         cancelled = true;
     }
 

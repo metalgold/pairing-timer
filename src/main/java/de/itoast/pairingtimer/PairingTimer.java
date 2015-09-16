@@ -2,9 +2,11 @@ package de.itoast.pairingtimer;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.TimerTask;
+import java.util.*;
+import java.util.Timer;
 
-public class PairingTimer extends java.util.Timer implements AngleTimer {
+public class PairingTimer implements AngleTimer {
+    private java.util.Timer timer;
     private int secondsLeft;
     private int seconds;
     private double angle;
@@ -19,10 +21,11 @@ public class PairingTimer extends java.util.Timer implements AngleTimer {
         this.timerConfiguration = timerConfiguration;
         this.panel = panel;
         this.cancelled = true;
+        timer = new Timer();
     }
 
     public void start() {
-        this.schedule(makeTimerTask(seconds, panel), 1000, 1000);
+        timer.schedule(makeTimerTask(seconds, panel), 1000, 1000);
     }
 
     private TimerTask makeTimerTask(final int seconds, final JPanel panel) {
@@ -83,7 +86,7 @@ public class PairingTimer extends java.util.Timer implements AngleTimer {
 
     @Override
     public void cancel() {
-        super.cancel();
+        timer.cancel();
         cancelled = true;
     }
 
